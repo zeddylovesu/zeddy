@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Electronic Portfolio - Zed</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(180deg, #dbeafe 0%, #f0f9ff 100%);
+      color: #1e293b;
+      scroll-behavior: smooth;
+    }
+
+    html {
+      scroll-padding-top: 80px;
+    }
+
+    nav {
+      background: #1e3a8a;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 12px 0;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      backdrop-filter: blur(8px);
+    }
+
+    nav a {
+      color: #f0f9ff;
+      text-decoration: none;
+      padding: 12px 22px;
+      font-weight: 600;
+      border-radius: 8px;
+      background: #2563eb;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      background: #3b82f6;
+      color: #ffffff;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    header {
+      text-align: center;
+      padding: 120px 20px 50px 20px;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: #f0f9ff;
+      border-bottom: 4px solid #60a5fa;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: #e0f2fe;
+    }
+
+    section {
+      display: none;
+      width: 85%;
+      margin: 40px auto;
+      background: linear-gradient(135deg, #1e40af, #3b82f6, #93c5fd);
+      color: #f0f9ff;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.8s ease-in-out;
+      transition: all 0.4s ease;
+    }
+
+    section:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    #home:target, #about:target, #tle:target, #ap:target, #gallery:target, #contact:target {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      color: #f0f9ff;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    h2::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: #60a5fa;
+      margin: 10px auto;
+      border-radius: 5px;
+    }
+
+    .projects-grid {
+      display: grid;
+      gap: 25px;
+      margin-top: 25px;
+    }
+
+    .event {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .event:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .event h3 {
+      color: #e0f2fe;
+      margin-bottom: 12px;
+    }
+
+    .event-images {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .event-images img {
+      width: 48%;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .event-images img:hover {
+      transform: scale(1.07);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .caption {
+      margin-top: 10px;
+      color: #bfdbfe;
+      font-weight: 500;
+    }
+
+    #gallery .event img {
+      width: 100%;
+      height: 55vh;
+      object-fit: cover;
+      border-radius: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #gallery .event img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+    }
+
+    #gallery .caption {
+      font-size: 1.2rem;
+      margin-top: 12px;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 90vh;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #f0f9ff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .profile-pic {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      border: 4px solid #60a5fa;
+      margin-bottom: 25px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-pic:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+    }
+
+    #about img {
+      border-radius: 15px;
+      width: 220px;
+      height: 140px;
+      object-fit: cover;
+      border: 4px solid #60a5fa;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #about img:hover {
+      transform: scale(1.07);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+    }
+
+    .personal-video {
+      width: 220px;
+      height: 140px;
+      border-radius: 15px;
+      border: 4px solid #60a5fa;
+      object-fit: cover;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .personal-video:hover {
+      transform: scale(1.07);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+    }
+
+    .socials {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .socials a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: #f0f9ff;
+      font-weight: 600;
+      background: #2563eb;
+      padding: 8px 15px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .socials a:hover {
+      background: #3b82f6;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+    }
+
+    .socials img {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">Personal Information</a>
+    <a href="#tle">Events</a>
+    <a href="#ap">Araling Panlipunan</a>
+    <a href="#gallery">TLE/ICT</a>
+    <a href="#contact">Socials</a>
+  </nav>
+
+  <header>
+    <h1>My Electronic Portfolio</h1>
+    <p>Showcasing My Skills, Achievements, and Creativity</p>
+  </header>
+
+  <section id="home">
+    <div class="hero">
+      <div class="hero-content">
+        <img src="img.3.jfif" alt="Zed's Photo" class="profile-pic">
+        <h1>Hello, I'm <span style="color:#93c5fd;">Zed</span></h1>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>Personal Space</h2>
+    <div class="projects-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="event"><h3>Family</h3><img src="fampic.jpg" alt="Family"><p>I love my family</p></div>
+      <div class="event"><h3>Friends</h3><img src="mixue.jpg" alt="Friends"><p>Best friends always</p></div>
+      <div class="event"><h3>Girlfriend</h3><img src="ayeka.jfif" alt="Girlfriend"><p>My special someone</p></div>
+      <div class="event"><h3>Hobbies</h3><video class="personal-video" autoplay muted loop><source src="vballzed.mp4" type="video/mp4"></video><p>Things I love to do</p></div>
+      <div class="event"><h3>Interests</h3><img src="zedsolo.jfif" alt="Interests"><p>Zedrick D. Bumanglag <b> "Zed" </b></p><br><p> 15 Years Old </p><br><p> August 17, 2010 09:02PM </p><br><b><p> FAVORITES </p></b><p> Blue, Transformers, Iris, </p><br><p> Shawarma, Porsche GT3RS, The Ridleys </p></div>
+    </div>
+  </section>
+  
+  <section id="tle">
+    <h2>Events</h2>
+    <p>These are some of the memorable school events I’ve participated in.</p>
+    <div class="projects-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="event">
+        <h3>Buwan ng Wika</h3>
+               <div class="event-images">
+          <img src="bnw1.jfif" alt="Image 1">
+          <img src="bnw2.jfif" alt="Image 2">
+        </div>
+        <video class="personal-video" autoplay muted loop>
+          <source src="bnw3.mp4" type="video/mp4">
+        </video>  
+<ul>
+  <li><b>Most important thing I learned:</b> Appreciating our own language and culture.</li>
+  <li><b>How I can apply it in real life:</b> By speaking Filipino with pride and respecting our traditions.</li>
+  <li><b>Did I actively participate? How?:</b> Yes, I joined the program and helped in classroom decorations.</li>
+  <li><b>If I were to teach this to a classmate:</b> I’d say that this event reminds us of the beauty of our language and national identity.</li>
+  <li><b>Why it’s important:</b> It helps preserve our culture and reminds us to value being Filipino.</li>
+</ul>
+  
+      </div>
+      <div class="event">
+        <h3>Intramurals</h3>
+        <div class="event-images">
+          <img src="intrams1.jpg.jfif" alt="Intramurals Image 1">
+          <img src="intrams2.jpg.jfif" alt="Intramurals Image 2">
+        </div>
+        <video class="personal-video" autoplay muted loop>
+          <source src="intrams.mp4" type="video/mp4">
+        </video>
+<ul>
+  <li><b>Most important thing I learned:</b> The importance of teamwork, discipline, and sportsmanship.</li>
+  <li><b>How I can apply it in real life:</b> By cooperating with others and staying humble whether I win or lose.</li>
+  <li><b>Did I actively participate? How?:</b> Yes, I joined and supported my team during the games.</li>
+  <li><b>If I were to teach this to a classmate:</b> I’d explain that intramurals help us stay active, learn teamwork, and build school spirit.</li>
+  <li><b>Why it’s important:</b> It strengthens friendship, teaches fair play, and promotes a healthy lifestyle.</li>
+</ul>
+
+      </div>
+      <div class="event">
+        <h3>Science Month</h3>
+               <div class="event-images">
+          <img src="scimonth1.jfif" alt="Image 1">
+          <img src="scimonth2.jfif" alt="Image 2">
+        </div>
+        <video class="personal-video" autoplay muted loop>
+          <source src="scimonth3	.mp4" type="video/mp4">
+        </video>
+<ul>
+  <li><b>Most important thing I learned:</b> The importance of science in solving real-world problems.</li>
+  <li><b>How I can apply it in real life:</b> By being curious and using science to understand how things work.</li>
+  <li><b>Did I actively participate? How?:</b> Yes, I took part in science-related activities and group presentations.</li>
+  <li><b>If I were to teach this to a classmate:</b> I’d explain that science helps us improve life and inspires us to explore and innovate.</li>
+  <li><b>Why it’s important:</b> It encourages creativity, curiosity, and appreciation for scientific discoveries.</li>
+</ul>
+
+      </div>
+      <div class="event">
+        <h3>A.P Month</h3>
+                <div class="event-images">
+          <img src="manamo1.jpg" alt="Image 1">
+          <img src="manamo2.jpg" alt="Image 2">
+        </div>
+        <video class="personal-video" autoplay muted loop>
+          <source src="manamo3.mp4" type="video/mp4">
+        </video> 
+<ul>
+  <li><b>Most important thing I learned:</b> Knowing more about history and how it shaped our country.</li>
+  <li><b>How I can apply it in real life:</b> By being aware of current events and appreciating the lessons of the past.</li>
+  <li><b>Did I actively participate? How?:</b> Yes, I joined our class performance and helped with the props.</li>
+  <li><b>If I were to teach this to a classmate:</b> I’d say that learning history helps us understand society and become responsible citizens.</li>
+  <li><b>Why it’s important:</b> It builds national pride and teaches us to learn from past experiences.</li>
+</ul>
+
+      </div>
+      <div class="event">
+        <h3>Teacher's Day</h3>
+                <div class="event-images">
+          <img src="teday1.jpg" alt="Image 1">
+          <img src="teday2.jpg" alt="Image 2">
+        </div>
+        <video class="personal-video" autoplay muted loop>
+          <source src="teday3.mp4" type="video/mp4">
+        </video>
+<ul>
+  <li><b>Most important thing I learned:</b> The value of appreciating and respecting our teachers.</li>
+  <li><b>How I can apply it in real life:</b> By showing gratitude and being kind to my teachers every day.</li>
+  <li><b>Did I actively participate? How?:</b> Yes, I helped prepare our class tribute and participated in the celebration.</li>
+  <li><b>If I were to teach this to a classmate:</b> I’d tell them that showing appreciation motivates teachers and strengthens our bond with them.</li>
+  <li><b>Why it’s important:</b> Teachers are our second parents, and they deserve recognition for their hard work and patience.</li>
+</ul>
+
+      </div>
+      <div class="event">
+        <h3>Cluster Meet</h3>
+                <div class="event-images">
+          <img src="cluster1.jfif" alt="Image 1">
+          <img src="cluster2.jfif" alt="Image 2">
+        </div>
+        <video class="personal-video" autoplay muted loop>
+          <source src="cluster3.mp4" type="video/mp4">
+        </video>
+<ul>
+  <li><b>Most important thing I learned:</b> I learned how important it is to support others and appreciate everyone’s effort in representing our school.</li>
+  <li><b>How I can apply it in real life:</b> By cheering for others and giving encouragement instead of just watching.</li>
+  <li><b>Did I actively participate? How?:</b> Yes, as an audience, I showed support by watching the events and cheering for our team.</li>
+  <li><b>If I were to teach this to a classmate:</b> I’d explain that being an audience is also a way of showing unity and school spirit.</li>
+  <li><b>Why it’s important:</b> It builds camaraderie, boosts confidence of participants, and strengthens the bond among students.</li>
+</ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="ap">
+    <h2>Araling Panlipunan</h2>
+    <p>Here are my AP lessons and activities.</p>
+    <div class="projects-grid" style="grid-template-columns: repeat(1, 1fr);">
+      <div class="event"><h3>Lesson 1</h3><div class="event-images"><img src="dg2.jpg" alt="Lesson 1A"><img src="dg1.jpg" alt="Lesson 1B"></div>
+<h4> Depinisyon ng Demand </h4> <p> Ang demand ay tumutukoy sa dami ng produkto o serbisyo na gusto at kayang bilhin ng mga mamimili sa isang takdang presyo at panahon. </p> 
+<h4> Batas ng Demand </h4> <ul> <li>Kapag tumataas ang presyo, bumababa ang dami ng gusto at kayang bilhin. </li> <li>Kapag bumababa ang presyo, tumataas ang dami ng gusto at kayang bilhin. </li></ul><h4> Ceteris Paribus</h4>
+<p>Ipinagpapalagay na ang presyo lamang ang salik na nakaapekto sa pagbabago ng quantity demanded, habang ang ibang salik ay hindi nagbabago o nakaapekto rito.</p> <h4> Demand Function </h4> <p>Qd = a - bP<br>Kung saan:<br>
+Qd = dami ng demand (Dependent)<br>
+a = dami ng demand kung ang presyo ay 0<br>
+-b = slope ng demand function<br>
+P = presyo</p><h4> Demand Schedule </h4> <p> Isang tsart na nagpapakita ng bilang ng mga kalakal o serbisyo na hinihiling sa mga tiyak na presyo. Ito ay isang talahanayan na nagpapakita ng ugnayan sa pagitan ng presyo at ang halaga ng mga kalakal na nais bayaran ng mga mamimili sa kanila sa presyo na iyon.</p>
+<h4> Demand Curve </h4><p>Tumutukoy sa grapikong representasyon ng batas ng demand. Ito ay isang lina (tuwid o kurba) na nagpapakita ng negatibong relasyon ng presyo ng isang produkto at ang bilang ng produktong handang bilhin ng mamimili</p><h4> Mga Salik ng Produkto </h4> <ol><li>Kita</li>
+<li>Populasyon</li><li>Panlasa</li><li>Presyo</li><li>Inaasahan ng mga mamimili sa presyo sa hinaharap</li><li>Okasyon</li><li>Panahon o Klima</li></div> 
+      
+
+
+      <div class="event"><h3>Lesson 2</h3><div class="event-images"><img src="sup1.png" alt="Lesson 2A"><img src="sup2.png" alt="Lesson 2B"></div><h4>Depinisyon ng Supply</h4>
+<p>Ang supply ay dami ng produkto o serbisyo na gustong ibenta ng mga prodyuser sa isang takdang presyo at partikular na panahon.</p>
+
+<h4>Mathematical Formula</h4>
+<p>Supply = Pagnanais + Kakayahan</p>
+
+<h4>Supply Function</h4>
+<p>Ang supply function ay nagpapakita ng ugnayan ng presyo at dami ng produktong handang ipagbili ng prodyuser.</p>
+
+<h4>Supply Schedule</h4>
+<p>Ang supply schedule ay isang talahanayan na nagpapakita ng dami ng produktong handang ipagbili sa iba’t ibang presyo.</p>
+
+<h4>Supply Curve</h4>
+<p>Ang supply curve ay grapikong paglalarawan ng ugnayan ng presyo at dami ng produktong handang ipagbili.</p>
+
+<h4>Market Supply</h4>
+<p>Ang market supply ay kabuuang dami ng produktong handang ipagbili ng lahat ng prodyuser sa pamilihan.</p>
+
+<h4>Batas ng Supply</h4>
+<p>Ang batas ng supply ay nagsasaad na kapag tumaas ang presyo, tumataas din ang dami ng produktong handang ipagbili, at kabaliktaran kapag bumaba ang presyo.</p>
+
+<h4>Grapikong Paglalarawan ng Pagbabago ng Supply</h4>
+<ul>
+  <li><b>Paggalaw sa Isang Kurba:</b> nagaganap kapag nagbago ang presyo ng produkto.</li>
+  <li><b>Paglipat ng Kurba:</b> nagaganap kapag may ibang salik (maliban sa presyo) na nagbago, tulad ng teknolohiya o gastos sa produksyon.</li>
+</ul>
+
+<h4>Mga Salik na Nakaaapekto sa Supply</h4>
+<ul>
+  <li>Teknolohiya</li>
+  <li>Presyo ng Tinda</li>
+  <li>Subsidy</li>
+  <li>Gastos sa Produksyon</li>
+  <li>Panahon/Klima</li>
+  <li>Presyo ng Ibang Produkto</li>
+  <li>Ekspektasyon</li>
+</ul>
+</div>
+      
+
+
+      <div class="event"><h3>Lesson 3</h3><div class="event-images"><img src="elas1.png" alt="Lesson 3A"><img src="elas2.png" alt="Lesson 3B"></div><h4>Elastisidad</h4>
+<p>Isang paraan upang matukoy kung gaano kalaki ang reaksyon ng mga mamimili at nagtitinda sa pagbabago ng presyo sa pamilihan.</p>
+
+<h4>Elastisidad ng Demand (ED)</h4>
+<p>Pagsusukat ng porsyento ng pagbabago sa dami ng bibilhing produkto ng mamimili sa bawat porsyento ng pagbabago sa presyo.</p>
+
+<h4>Elastisidad ng Supply (ES)</h4>
+<p>Pagtataya ng porsyento ng pagbabago sa dami ng produktong handang ipagbili ng prodyuser kapag nagbago ang presyo.</p>
+
+<h4>Uri ng Elastisidad</h4>
+<ul>
+  <li><b>Elastik</b> – Kapag malaki ang naging pagbabago sa dami ng demand o supply kumpara sa pagbabago ng presyo (E > 1). Halimbawa: mga produktong maraming alternatibo o pamalit.</li>
+
+  <li><b>Di-Elastik</b> – Kapag maliit lamang ang pagbabago sa dami ng demand o supply kahit tumaas o bumaba ang presyo (E < 1). Halimbawa: mga pangunahing pangangailangan gaya ng gamot.</li>
+
+  <li><b>Unitary</b> – Nangyayari kapag pantay ang bahagdan ng pagbabago sa presyo at sa dami ng demand (E = 1).</li>
+
+  <li><b>Ganap na Elastik (Perfectly Elastic)</b> – Ibig sabihin, kahit maliit na pagbabago sa presyo ay maaaring magdulot ng napakalaking pagbabago sa dami ng demand o supply. Halimbawa: mga produktong madaling palitan tulad ng tsokolate.</li>
+
+  <li><b>Ganap na Di-Elastik (Perfectly Inelastic)</b> – Ipinapakita na ang dami ng demand o supply ay nananatiling pareho kahit magbago ang presyo (E = 0). Halimbawa: mga produktong mahalaga sa araw-araw tulad ng bigas.</li>
+</ul>
+</div>
+      
+
+
+      <div class="event"><h3>Lesson 4</h3><div class="event-images"><img src="eqp1.png" alt="Lesson 4A"><img src="eqp2.png" alt="Lesson 4B"></div><h4>Equilibrium</h4>
+<p>Isang kalagayan sa pamilihan kung saan ang mga mamimili at nagtitinda ay parehong nasisiyahan at walang gustong baguhin sa presyo o dami ng produkto. Ipinapakita nito ang punto kung saan nagtatagpo ang supply at demand.</p>
+
+<h4>Law of Supply and Demand</h4>
+<p>
+If price increases: Supply ↑, Demand ↓ <br>
+If price decreases: Supply ↓, Demand ↑
+</p>
+
+<h4>Mga Kaganapan sa Pagbabago sa Pamilihan</h4>
+<ol>
+  <li>Kapag tumaas ang supply ngunit hindi nagbago ang demand curve, bababa ang presyo.</li>
+  <li>Kapag bumaba ang supply ngunit hindi nagbago ang demand, tataas ang presyo.</li>
+  <li>Kapag tumaas ang demand ngunit pareho ang supply, tataas ang presyo.</li>
+  <li>Kapag bumaba ang demand habang pareho ang supply, bababa ang presyo.</li>
+  <li>Kapag tumaas ang parehong demand at supply, tataas ang dami ngunit di tiyak ang presyo.</li>
+  <li>Kapag bumaba ang parehong demand at supply, bababa ang dami ngunit di tiyak ang presyo.</li>
+  <li>Kapag mas malaki ang pagtaas ng demand kaysa supply, tataas ang presyo at dami.</li>
+  <li>Kapag mas malaki ang pagtaas ng supply kaysa demand, bababa ang presyo ngunit tataas ang dami.</li>
+  <li>Kapag mas malaki ang pagbaba ng demand kaysa supply, bababa ang presyo at dami.</li>
+  <li>Kapag mas malaki ang pagbaba ng supply kaysa demand, tataas ang presyo ngunit bababa ang dami.</li>
+  <li>Kapag tumaas ang demand at bumaba ang supply, siguradong tataas ang presyo.</li>
+  <li>Kapag bumaba ang demand at tumaas ang supply, siguradong bababa ang presyo.</li>
+</ol>
+
+<h4>Disequilibrium</h4>
+<p>Ang kalagayan kung saan hindi magkapantay ang dami ng demand at supply. Maaari itong magdulot ng kakulangan o labis na produkto sa pamilihan.</p>
+<p><b>Dami ng Demand ≠ Dami ng Supply</b></p>
+
+<h4>Surplus</h4>
+<p>Ang labis na supply sa pamilihan. Nangyayari ito kapag mas maraming produktong handang ibenta kaysa sa gustong bilhin ng mamimili.</p>
+<p><b>Dami ng Supply &gt; Dami ng Demand</b></p>
+
+<h4>Shortage</h4>
+<p>Ang kakulangan ng produkto sa pamilihan. Nangyayari ito kapag mas maraming gustong bumili kaysa sa dami ng produktong handang ibenta.</p>
+<p><b>Dami ng Demand &gt; Dami ng Supply</b></p>
+</div>
+      
+
+
+      <div class="event"><h3>Lesson 5</h3><div class="event-images"><img src="estruk1.jfif" alt="Lesson 5A"><img src="estruk2.jpg" alt="Lesson 5B"></div><h4>Mga Istruktura ng Pamilihan</h4>
+<p>Mula sa konsepto ng kompetisyon, umusbong ang iba't ibang anyo ng estruktura sa pamilihan. Sa ilalim ng di-ganap na kompetisyon, kabilang dito ang monopolyo, monopolistikong kompetisyon, oligopolyo, at ganap na kompetisyon.</p>
+
+<h4>Ganap na Kompetisyon</h4>
+<p>Ang ganap na kompetisyon ay isang sistemang pamilihan kung saan ang presyo at kalakalan ay malayang naaapektuhan ng ugnayan ng mamimili at nagtitinda, nang walang kontrol mula sa pamahalaan. Isang halimbawa nito ay ang mga produktong may itinakdang price ceiling.</p>
+<ul>
+  <li>Maraming mamimili at nagbebenta sa merkado.</li>
+  <li>Ang mga produktong ibinebenta ay magkakatulad o pare-pareho ang katangian.</li>
+  <li>Malayang nakakapasok at nakakalabas ang mga mamimili at prodyuser sa pamilihan.</li>
+  <li>Malayang nagaganap ang palitan ng produkto at serbisyo sa industriya.</li>
+</ul>
+
+<h4>Di-Ganap na Kompetisyon</h4>
+<p>Sa ilalim ng estrukturang ito, mayroong mga hadlang na pumipigil sa ganap na kalayaan ng mga kalahok sa pamilihan. Mas mahirap para sa mga prodyuser o mamimili na pumasok o makipagkumpitensya dahil may mga kundisyong limitado.</p>
+
+<h4>Monopoly</h4>
+<p>Ang monopolyo ay kalagayan ng pamilihan kung saan iisang prodyuser lamang ang gumagawa at nagbebenta ng isang produkto o serbisyo, kaya’t walang direktang katunggali sa merkado.</p>
+
+<h4>Monopolistikong Kompetisyon</h4>
+<p>Sa ganitong uri ng pamilihan, maraming nagbebenta at bumibili ngunit nagkakaiba-iba ang mga produkto dahil sa tatak, kalidad, o anyo. Karaniwang ginagamit ng mga negosyo ang advertising at branding upang makuha ang atensyon ng mamimili.</p>
+</div>
+      
+
+
+      <div class="event"><h3>Lesson 6</h3><div class="event-images"><img src="prc1.png" alt="Lesson 6A"><img src="prc2.png" alt="Lesson 6B"></div><h4>Ang Pagkontrol ng Presyo ng Pamahalaan</h4>
+<p>Ang pamahalaan ay may kapangyarihang magtakda ng pinakamababa at pinakamataas na presyo ng mga produkto o serbisyo upang mapanatili ang patas na kalakalan sa merkado.</p>
+
+<h4>Republic Act 7581</h4>
+<p>Kilala ito bilang <i>Price Control Act</i> na may layuning bigyan ng awtoridad ang pamahalaan na makialam sa pagtatakda ng presyo upang mapigilan ang sobrang pagtaas ng halaga ng mga pangunahing bilihin.</p>
+
+<h4>National Price Coordination Council</h4>
+<p>Layunin ng konsehong ito na subaybayan at mapanatili ang tamang presyo ng mga bilihin. Tinutulungan din nito ang pamahalaan sa pagpapatupad ng mga batas tungkol sa price ceiling at price control.</p>
+
+<h4>Price Ceiling</h4>
+<p>Ito ang pinakamataas na presyong itinakda ng pamahalaan upang ipagbili ang mga produkto.</p>
+<ul>
+  <li>Nagbibigay proteksyon sa mga mamimili laban sa labis na pagtaas ng presyo.</li>
+  <li>Kadalasang mas mababa ito kaysa sa equilibrium price upang mapanatili ang abot-kayang halaga sa merkado.</li>
+</ul>
+
+<h4>Price Support</h4>
+<p>Isinasagawa ito ng pamahalaan upang tulungan ang mga prodyuser, sa pamamagitan ng pagbibigay ng proteksyon at tamang bayad para sa kanilang mga gastos sa produksyon.</p>
+
+<h4>Floor Price</h4>
+<p>Ang floor price ay ang pinakamababang presyong itinakda ng pamahalaan para sa pagbebenta ng mga produkto, upang matiyak na hindi malulugi ang mga nagbebenta o prodyuser.</p>
+</div>
+
+
+<div class="event"><h3>Reflection</h3><div class="event-images"></div><p> Sa ikalawang markahan, marami akong natutunan tungkol sa kung paano gumagana ang ekonomiya at ang koneksyon ng demand, supply, elastisidad, ekwilibriyo, istruktura ng pamilihan, at price control sa ating pang-araw-araw na buhay. Mas naintindihan ko kung bakit nagbabago ang presyo ng mga produkto at kung paano naaapektuhan nito ang mga mamimili at prodyuser. Napagtanto ko rin na mahalaga ang papel ng pamahalaan sa pagpapanatili ng tamang presyo upang maiwasan ang labis o kakulangan ng produkto sa merkado. Sa kabuuan, naging mas malinaw sa akin kung paano nabubuo ang balanse sa ekonomiya at kung paano nakikilahok ang bawat isa sa maayos na daloy ng pamilihan.</p>
+</div>
+    
+
+
+    </div>
+  </section>
+
+  <section id="gallery">
+    <h2>TLE/ICT</h2>
+    <p>Codes and Browser Outputs per lesson.</p>
+    <div class="projects-grid" style="grid-template-columns: repeat(1, 1fr);">
+      
+<div class="event"><h3>Q2L1</h3> <h5><b> What is CSS? </b></h5> <p>CSS stands for <b>
+      Cascading Style Sheets.</b> It defines how HTML elements are displayed on screens and helps separate content from design. It makes websites easier to maintain and style consistently.</p>
+      <br><h5><b> Layers of a Webpage </b></h5> <ul><li>Content Layer (HTML): Structure and information.</li><li>Presentation Layer (CSS): Design and visual style.</li><li>Behavior Layer (JavaScript): Interactivity and user actions.</li></ul>
+      <br><h5><b> Benefits of Using CSS </b></h5> <ul><li>CSS saves lots of work</li><li>Easy maintenance</li><li>Makes adding style to a webpage more pleasing to the eye</li></ul>
+      <br><h5><b> Capabilities of Using CSS </b></h5> <ul><li>Makes pages easily updateable</li><li>Gives you control on placing objects</li><li>Allows you to create custom tags</li></ul>
+      <br><h5><b> Advantages of Using CSS </b></h5> <ul><li>Faster loading speeds</li><li>Easier to maintain and update</li><li>ASeparation of structure and style</li></ul>
+      <br><h5><b> Prequisites to learning CSS </b></h5><p> You should have a basic knowledge and understanding of HTML and XHTML to continue learning CSS</p><br><br><p>I learned that CSS is used to style and design web pages, making them more attractive and easier to read. This lesson helped me understand how CSS works together with HTML to create visually appealing websites.</p></div>
+
+
+
+
+      <div class="event"><h3>Q2L2</h3>
+<b><h5> What are the Three Types of CSS? </b></h5>
+<p>There are three types of CSS can be added to HTML in three main ways; Inline, Internal (or Embedded), and External.</p>
+
+<b><h5> Inline Style Sheet </b></h5>
+<p>Inline CSS is written directly within an HTML tag using the style attribute. It affects only that specific element. While it’s quick for small edits, it’s not recommended for large websites because it can become repetitive and hard to manage.</p>
+
+
+
+<b><h5> Internal (Embedded) Style Sheet </b></h5>
+<p>Internal CSS is written inside the "style" tag within the HTML document’s <head> section. It applies to the entire page and is easier to manage than inline CSS, but changes only affect that one file.</p>
+
+
+
+<b><h5> External Style Sheet </b></h5>
+<p>External CSS is written in a separate .css file and linked to the HTML using the "link" tag. This is the most efficient method for large or multi-page websites because one file can control the style for all pages.</p>
+
+
+
+ <b><h5>Advantages of Each Type:</b></h5>
+<ul>
+<li>Inline: Fast and is specific to only one element. </li>
+<li>Internal: Easiest to use for applying styles in a single page. </li>
+<li>External: Best for consistency and usability across multiple pages.</li>
+</ul>
+<br><br><p>I discovered the three main ways to apply CSS — internal, external, and inline — and how each one affects a webpage’s structure. This taught me to choose the best method depending on the situation, making my code more organized and reusable.</p>
+
+</div>
+
+
+
+
+      <div class="event"><h3>Q2L3</h3><div class="event-images"><img src="spandiv1.png" alt="Lesson 3A"><img src="spandiv2.png" alt="Lesson 3B"><img src="spandiv3.png" alt="Lesson 3C"></div><br><br><p>I learned how the display property controls how elements appear on a page, and how <span> and <div> help in grouping and styling content. This made me realize how layout control is essential for creating clean and flexible webpage designs.</p></div>
+      <div class="event"><h3>Q2L4</h3><div class="event-images"><img src="selecta1.png" alt="Lesson 4A"><img src="selecta2.png" alt="Lesson 4B"><img src="selecta3.png" alt="Lesson 4C"></div><br><br><p>I learned how to use CSS classes and selectors to apply specific styles to different parts of a webpage. This helped me understand how to make my design more organized, flexible, and visually appealing.</p></div>
+      <div class="event"><h3>Q2L5</h3><div class="event-images"><img src="cssselecta1.png" alt="Lesson 5A"><img src="cssselecta2.png" alt="Lesson 5B"><img src="cssselecta3.png" alt="Lesson 5C"><img src="cssselecta4.png" alt="Lesson 5D"></div><br><br><p>I discovered that there are many types of CSS selectors, such as element, class, ID, and descendant selectors. Knowing how to use each one properly allows me to control the layout and style of my website more efficiently.</p></div>
+      <div class="event"><h3>Q2L6</h3><div class="event-images"><img src="pseudo1.png" alt="Lesson 6A"><img src="pseudo2.png" alt="Lesson 6B"><img src="pseudo3.png" alt="Lesson 6C"><img src="pseudo4.png" alt="Lesson 6D"></div><br><br><p>I learned how to adjust the size and spacing of elements using CSS dimensions like width, height, and padding. I also explored pseudo-classes, which make webpages more interactive by changing styles when users hover, click, or focus on elements.</p></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Socials</h2>
+    <div class="socials">
+      <a href="https://www.facebook.com/share/178rkFdNDB/?mibextid=wwXIfr" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png" alt="Facebook">Facebook</a>
+      <a href="https://www.instagram.com/z1ckk_k?igsh=MXFyd3RoeGgwbndzNQ%3D%3D&utm_source=qr" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" alt="Instagram">Instagram</a>
+      <a href="https://www.tiktok.com/@z1ckk_k?_t=ZS-90eVkSbOCO2&_r=1" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/tiktok.png" alt="TikTok">TikTok</a>
+      <a href="https://x.com/zeddylovesu?s=21" target="_blank"><img src="https://img.icons8.com/ios-filled/50/ffffff/twitter.png" alt="X (Twitter)">X</a>
+    </div>
+  </section>
+</body>
+</html>
